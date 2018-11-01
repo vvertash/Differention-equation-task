@@ -1,7 +1,9 @@
 import sys
-from PyQt5.QtWidgets import (QWidget, QToolTip,
-                                 QPushButton, QApplication)
+from PyQt5.QtWidgets import (QWidget, QToolTip, QPushButton, QApplication, QVBoxLayout, QLabel)
 from PyQt5.QtGui import QFont
+#from PyQt5 import Qt
+import pyqtgraph as pg
+import numpy as np
 
 
 class Example(QWidget):
@@ -25,8 +27,33 @@ class Example(QWidget):
         self.setWindowTitle('Tooltips')
         self.show()
 
+class Window(QWidget):
+
+    def __init__(self):
+        super().__init__()
+
+        layout = QVBoxLayout(self)
+
+        self.view = view = pg.PlotWidget()
+        self.curve = view.plot(name="Line")
+
+        self.btn = QPushButton("Apply")
+        self.btn.clicked.connect(self.random_plot)
+
+        layout.addWidget(QLabel("Graphics"))
+        layout.addWidget(self.view)
+        layout.addWidget(self.btn)
+
+    def random_plot(self):
+        random_array = np.random.random_sample(20)
+        self.curve.setData(random_array)
+
 
 if __name__ == '__main__':
-    app = QApplication(sys.argv)
-    ex = Example()
-    sys.exit(app.exec_())
+    #app = QApplication(sys.argv)
+    #ex = Example()
+    #sys.exit(app.exec_())
+    app = QApplication([])
+    w = Window()
+    w.show()
+    app.exec()
