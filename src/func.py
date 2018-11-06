@@ -8,7 +8,7 @@ def func(x, y):
 def funcIVP(x):
     return 1 - x
 
-# function for improved euler method
+# function counting delta for improved euler method
 def delta_y(x, y, h):
     return h * func(x + h / 2, y + h / 2 * func(x, y))
 
@@ -31,3 +31,19 @@ def k3(x, y, h):
 # forth coefficient for runge kutta method
 def k4(x, y, h):
     return func(x + h, y + h * k3(x, y, h))
+
+# euler method function
+def euler(steps_amount):
+    # Initial values
+    x = [0.0]
+    y = [1.0]
+    # step size
+    h = (5 - x[0]) / steps_amount
+
+    for i in range(steps_amount):
+        # drawing graph using points
+        x.append(x[i] + h)
+        y.append(y[i] + h * (func(x[i], y[i])))
+
+    return x, y
+
