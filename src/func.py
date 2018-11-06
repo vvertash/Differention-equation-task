@@ -32,7 +32,7 @@ def k3(x, y, h):
 def k4(x, y, h):
     return func(x + h, y + h * k3(x, y, h))
 
-# euler method function
+# Euler method graph function
 def euler(steps):
 
     # Initial values
@@ -81,5 +81,22 @@ def runge_kutta(steps):
     for i in range(steps):
         x.append(x[i]+h)
         y.append(y[i] + runge_kutta_delta_y(x[i], y[i], h))
+
     return x, y
 
+# Improved Euler method graph function
+def euler_improved(steps):
+
+    # Initial values
+    x = [0.0]
+    y = [1.0]
+
+    # step size
+    h = (5 - x[0]) / steps
+
+    # drawing graph using points
+    for i in range(steps):
+        x.append(x[i]+h)
+        y.append(y[i] + delta_y(x[i], y[i], h))
+
+    return x, y
