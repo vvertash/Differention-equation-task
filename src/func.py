@@ -34,16 +34,34 @@ def k4(x, y, h):
 
 # euler method function
 def euler(steps_amount):
+
     # Initial values
     x = [0.0]
     y = [1.0]
+
     # step size
     h = (5 - x[0]) / steps_amount
 
+    # drawing graph using points
     for i in range(steps_amount):
-        # drawing graph using points
         x.append(x[i] + h)
         y.append(y[i] + h * (func(x[i], y[i])))
 
     return x, y
 
+# IVP graph function
+def IVP(steps_amount):
+
+    # Initial values
+    x = [0.0]
+    y = []
+
+    # step size
+    h = (5 - x[0]) / steps_amount
+
+    # drawing graph using points
+    for i in range(steps_amount):
+        x.append(x[i] + h)
+        y.append(funcIVP(x[i]))
+    y.append(funcIVP(x[-1]))
+    return x, y
