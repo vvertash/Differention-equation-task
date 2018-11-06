@@ -4,6 +4,15 @@ from PyQt5.QtGui import QFont
 #from PyQt5 import Qt
 import pyqtgraph as pg
 import numpy as np
+import func
+
+steps = 3
+
+# calculating graphs
+x_euler, y_euler = func.euler(steps)
+x_exact, y_exact = func.IVP(steps)
+x_euler_improved, y_euler_improved = func.euler_improved(steps)
+x_runge_kutta, y_runge_kutta = func.runge_kutta(steps)
 
 
 class Example(QWidget):
