@@ -15,7 +15,28 @@ class App(QMainWindow):
         self.title = 'Differential equation -y-x'
         self.width = 720
         self.height = 640
-        #self.initUI()
+        self.initUI()
+
+    def initUI(self):
+        self.setWindowTitle(self.title)
+        self.setGeometry(self.left, self.top, self.width, self.height)
+
+        #m = PlotCanvas(self, width=5, height=6)
+        #m.move(0, 0)
+
+        self.textbox = QLineEdit(self)
+        self.textbox.move(520, 0)
+        self.textbox.resize(120, 50)
+
+        self.textbox1 = QLineEdit(self)
+        self.textbox1.move(520, 80)
+        self.textbox1.resize(120, 50)
+
+        self.textbox2 = QLineEdit(self)
+        self.textbox2.move(520, 170)
+        self.textbox2.resize(120, 50)
+
+        self.show()
 
 
 if __name__ == '__main__':
