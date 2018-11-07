@@ -4,6 +4,7 @@ from PyQt5.QtCore import pyqtSlot
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 from matplotlib.figure import Figure
 from func import *
+from math import fabs
 
 
 class App(QMainWindow):
@@ -24,29 +25,35 @@ class App(QMainWindow):
         m = PlotCanvas(self, width=5, height=6)
         m.move(0, 0)
 
-        self.textbox = QLineEdit(self)
-        self.textbox.move(520, 0)
-        self.textbox.resize(120, 50)
+        # first textbox with x0
+        self.textbox_x0 = QLineEdit(self)
+        self.textbox_x0.move(520, 0)
+        self.textbox_x0.resize(120, 50)
 
-        self.label = QLabel(self)
-        self.label.setText("x0")
-        self.label.move(660, 20)
+        # first label with x0
+        self.label_x0 = QLabel(self)
+        self.label_x0.setText("x0")
+        self.label_x0.move(660, 20)
 
-        self.textbox1 = QLineEdit(self)
-        self.textbox1.move(520, 80)
-        self.textbox1.resize(120, 50)
+        # second textbox with y0
+        self.textbox_y0 = QLineEdit(self)
+        self.textbox_y0.move(520, 80)
+        self.textbox_y0.resize(120, 50)
 
-        self.label1 = QLabel(self)
-        self.label1.setText("y0")
-        self.label1.move(660, 100)
+        # second label with y0
+        self.label_y0 = QLabel(self)
+        self.label_y0.setText("y0")
+        self.label_y0.move(660, 100)
 
-        self.textbox2 = QLineEdit(self)
-        self.textbox2.move(520, 170)
-        self.textbox2.resize(120, 50)
+        # third textbox with x
+        self.textbox_x = QLineEdit(self)
+        self.textbox_x.move(520, 170)
+        self.textbox_x.resize(120, 50)
 
-        self.label3 = QLabel(self)
-        self.label3.setText("x")
-        self.label3.move(660, 190)
+        # third label with x
+        self.label_x = QLabel(self)
+        self.label_x.setText("x")
+        self.label_x.move(660, 190)
 
         button = QPushButton('Apply', self)
         button.move(520, 250)
@@ -79,23 +86,13 @@ class PlotCanvas(FigureCanvas):
         self.plot(x_max=x_max, x0=x0, y0=y0)
 
     def plot(self, x_max=10, x0=0, y0=1):
-        data_x, data_y = euler(3, x_max=x_max, x0=x0, y0=y0)
-        data_x1, data_y1 = euler_improved(3, x_max=x_max, x0=x0, y0=y0)
-        data_x2, data_y2 = runge_kutta(3, x_max=x_max, x0=x0, y0=y0)
-        ax = self.figure.add_subplot(311)
-        ax.plot(data_x, data_y, 'r-')
-        ax.plot(data_x1, data_y1, 'r-')
-        ax.plot(data_x2, data_y2, 'r-')
-        data_x, data_y = euler_improved(3, x_max=x_max, x0=x0, y0=y0)
-        ax = self.figure.add_subplot(312)
-        ax.plot(data_x, data_y, 'r-')
-        data_x, data_y = runge_kutta(3, x_max=x_max, x0=x0, y0=y0)
-        ax = self.figure.add_subplot(313)
-        ax.plot(data_x, data_y, 'r-')
 
-        self.draw()
+        # steps
+        steps = 3
+
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
     ex = App()
     sys.exit(app.exec_())
+
