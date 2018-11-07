@@ -28,13 +28,25 @@ class App(QMainWindow):
         self.textbox.move(520, 0)
         self.textbox.resize(120, 50)
 
+        self.label = QLabel(self)
+        self.label.setText("x0")
+        self.label.move(660, 20)
+
         self.textbox1 = QLineEdit(self)
         self.textbox1.move(520, 80)
         self.textbox1.resize(120, 50)
 
+        self.label1 = QLabel(self)
+        self.label1.setText("y0")
+        self.label1.move(660, 100)
+
         self.textbox2 = QLineEdit(self)
         self.textbox2.move(520, 170)
         self.textbox2.resize(120, 50)
+
+        self.label3 = QLabel(self)
+        self.label3.setText("x")
+        self.label3.move(660, 190)
 
         self.show()
 
