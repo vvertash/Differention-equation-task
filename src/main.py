@@ -53,9 +53,18 @@ class App(QMainWindow):
         button.resize(120, 50)
 
         # connect button to function on_click
-        #button.clicked.connect(self.on_click)
+        button.clicked.connect(self.on_click)
 
         self.show()
+
+        @pyqtSlot()
+        def on_click(self):
+            x0 = float(self.textbox.text())
+            y0 = float(self.textbox1.text())
+            x_max = int(self.textbox2.text())
+            #m = PlotCanvas(self, width=5, height=6, x_max=x_max, y0=y0, x0=x0)
+            #m.move(0, 0)
+            #m.show()
 
 
 if __name__ == '__main__':
