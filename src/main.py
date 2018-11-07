@@ -57,14 +57,14 @@ class App(QMainWindow):
 
         self.show()
 
-        @pyqtSlot()
-        def on_click(self):
-            x0 = float(self.textbox.text())
-            y0 = float(self.textbox1.text())
-            x_max = int(self.textbox2.text())
-            #m = PlotCanvas(self, width=5, height=6, x_max=x_max, y0=y0, x0=x0)
-            #m.move(0, 0)
-            #m.show()
+    @pyqtSlot()
+    def on_click(self):
+        x0 = float(self.textbox.text())
+        y0 = float(self.textbox1.text())
+        x_max = int(self.textbox2.text())
+        m = PlotCanvas(self, width=5, height=6, x_max=x_max, y0=y0, x0=x0)
+        m.move(0, 0)
+        m.show()
 
 class PlotCanvas(FigureCanvas):
 
@@ -78,6 +78,22 @@ class PlotCanvas(FigureCanvas):
         FigureCanvas.updateGeometry(self)
         self.plot(x_max=x_max, x0=x0, y0=y0)
 
+    def plot(self, x_max=10, x0=0, y0=1):
+        data_x, data_y = euler(3, x_max=x_max, x0=x0, y0=y0)
+        data_x1, data_y1 = euler_improved(3, x_max=x_max, x0=x0, y0=y0)
+        data_x2, data_y2 = runge_kutta(3, x_max=x_max, x0=x0, y0=y0)
+        ax = self.figure.add_subplot(311)
+        ax.plot(data_x, data_y, 'r-')
+        ax.plot(data_x1, data_y1, 'r-')
+        ax.plot(data_x2, data_y2, 'r-')
+        data_x, data_y = euler_improved(3, x_max=x_max, x0=x0, y0=y0)
+        ax = self.figure.add_subplot(312)
+        ax.plot(data_x, data_y, 'r-')
+        data_x, data_y = runge_kutta(3, x_max=x_max, x0=x0, y0=y0)
+        ax = self.figure.add_subplot(313)
+        ax.plot(data_x, data_y, 'r-')
+
+        self.draw()
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
