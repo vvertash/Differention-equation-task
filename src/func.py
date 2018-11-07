@@ -5,8 +5,9 @@ def func(x, y):
     return - y - x
 
 # function of my solution of IVP
-def funcIVP(x):
-    return 1 - x
+def funcIVP(x, x0 = 0, y0 = 1):
+    c = math.e ** x * (y0 + x0 - 1)
+    return c * math.e ** (-x) - x + 1
 
 # function counting delta for improved euler method
 def delta_y(x, y, h):
@@ -33,14 +34,14 @@ def k4(x, y, h):
     return func(x + h, y + h * k3(x, y, h))
 
 # Euler method graph function
-def euler(steps):
+def euler(steps, x_max = 10, x0 = 0, y0 = 1):
 
     # Initial values
-    x = [0.0]
-    y = [1.0]
+    x = [x0]
+    y = [y0]
 
     # step size
-    h = (5 - x[0]) / steps
+    h = (x_max - x[0]) / steps
 
     # drawing graph using points
     for i in range(steps):
@@ -50,53 +51,53 @@ def euler(steps):
     return x, y
 
 # IVP graph function
-def IVP(steps):
+def IVP(steps, x_max = 10, x0 = 0, y0 = 1):
 
     # Initial values
-    x = [0.0]
-    y = []
+    x = [x0]
+    y = [y0]
 
     # step size
-    h = (5 - x[0]) / steps
+    h = (x_max - x[0]) / steps
 
     # drawing graph using points
     for i in range(steps):
         x.append(x[i] + h)
-        y.append(funcIVP(x[i]))
+        y.append(funcIVP(x[i], x0, y0))
 
-    y.append(funcIVP(x[-1]))
-    return x, y
-
-# Runge-Kutta graph function
-def runge_kutta(steps):
-
-    # Initial values
-    x = [0.0]
-    y = [1.0]
-
-    # step size
-    h = (5 - x[0]) / steps
-
-    # drawing graph using points
-    for i in range(steps):
-        x.append(x[i]+h)
-        y.append(y[i] + runge_kutta_delta_y(x[i], y[i], h))
-
+    y.append(funcIVP(x[-1], x0, y0))
     return x, y
 
 # Improved Euler method graph function
-def euler_improved(steps):
+def euler_improved(steps, x_max = 10, x0 = 0, y0 = 1):
 
     # Initial values
-    x = [0.0]
-    y = [1.0]
+    x = [x0]
+    y = [y0]
 
     # step size
-    h = (5 - x[0]) / steps
+    h = (x_max - x[0]) / steps
 
     # drawing graph using points
     for i in range(steps):
         x.append(x[i]+h)
         y.append(y[i] + delta_y(x[i], y[i], h))
+
+    return x, y
+
+# Runge-Kutta graph function
+def runge_kutta(steps, x_max = 10, x0 = 0, y0 = 1):
+
+    # Initial values
+    x = [x0]
+    y = [y0]
+
+    # step size
+    h = (x_max - x[0]) / steps
+
+    # drawing graph using points
+    for i in range(steps):
+        x.append(x[i]+h)
+        y.append(y[i] + runge_kutta_delta_y(x[i], y[i], h))
 
     return x, y
