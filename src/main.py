@@ -48,6 +48,13 @@ class App(QMainWindow):
         self.label3.setText("x")
         self.label3.move(660, 190)
 
+        button = QPushButton('Apply', self)
+        button.move(520, 250)
+        button.resize(120, 50)
+
+        # connect button to function on_click
+        #button.clicked.connect(self.on_click)
+
         self.show()
 
 
