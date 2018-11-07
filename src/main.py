@@ -90,6 +90,62 @@ class PlotCanvas(FigureCanvas):
         # steps
         steps = 3
 
+        # calculating graphs
+        x_euler, y_euler = euler(steps, x_max=x_max, x0=x0, y0=y0)
+        x_ivp, y_ivp = IVP(steps, x_max=x_max, x0=x0, y0=y0)
+        x_euler_improved, y_euler_improved = euler_improved(steps, x_max=x_max, x0=x0, y0=y0)
+        x_runge_kutta, y_runge_kutta = runge_kutta(steps, x_max=x_max, x0=x0, y0=y0)
+
+        # local error calculating
+        euler_local_error = [0.0]
+        euler_improved_local_error = [0.0]
+        runge_kutta_local_error = [0.0]
+        for i in range(steps):
+            euler_local_error.append(fabs(y_ivp[i] - y_euler[i]))
+            euler_improved_local_error.append(fabs(y_ivp[i] - y_euler_improved[i]))
+            runge_kutta_local_error.append(fabs(y_ivp[i] - y_runge_kutta[i]))
+
+        # global error calculating
+
+        # start and finish
+        start = 20
+        finish = 100
+
+        # array for x axis in global error graph
+        array = []
+
+        # global error calculating
+        euler_global_error = []
+        euler_improved_global_error = []
+        runge_kutta_global_error = []
+
+        for i in range(start, finish):
+            array.append(i)
+
+            # calculating every graph with 'i' accuracy
+            x_euler, y_euler = euler(i, x_max=10, x0=0, y0=1)
+            x_ivp, y_ivp = IVP(i, x_max=10, x0=0, y0=1)
+            x_euler_improved, y_euler_improved = euler_improved(i, x_max=10, x0=0, y0=1)
+            x_runge_kutta, y_runge_kutta = runge_kutta(i, x_max=10, x0=0, y0=1)
+
+            # calculating global error
+            euler_max_error = 0
+            euler_improved_max_error = 0
+            runge_kutta_max_error = 0
+
+            for j in range(i):
+                if fabs(y_ivp[j] - y_ivp[j]) > euler_max_error:
+                    euler_max_error = fabs(y_ivp[j] - y_ivp[j])
+
+                if fabs(y_ivp[j] - y_euler_improved[j]) > euler_improved_max_error:
+                    euler_improved_max_error = fabs(y_ivp[j] - y_euler_improved[j])
+
+                if fabs(y_ivp[j] - y_runge_kutta[j]) > runge_kutta_max_error:
+                    runge_kutta_max_error = fabs(y_ivp[j] - y_runge_kutta[j])
+
+            euler_global_error.append(euler_max_error)
+            euler_improved_global_error.append(euler_improved_max_error)
+            runge_kutta_global_error.append(runge_kutta_max_error)
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
