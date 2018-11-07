@@ -66,9 +66,9 @@ class App(QMainWindow):
 
     @pyqtSlot()
     def on_click(self):
-        x0 = float(self.textbox.text())
-        y0 = float(self.textbox1.text())
-        x_max = int(self.textbox2.text())
+        x0 = float(self.textbox_x0.text())
+        y0 = float(self.textbox_y0.text())
+        x_max = int(self.textbox_x.text())
         m = PlotCanvas(self, width=5, height=6, x_max=x_max, y0=y0, x0=x0)
         m.move(0, 0)
         m.show()
@@ -128,11 +128,11 @@ class PlotCanvas(FigureCanvas):
         ax.legend()
 
         # second plot with local errors
-        '''ax = self.figure.add_subplot(312)
+        ax = self.figure.add_subplot(312)
         ax.plot(x_euler, euler_local_error, label="euler local error")
         ax.plot(x_euler_improved, euler_improved_local_error, label="improved euler local error")
         ax.plot(x_runge_kutta, runge_kutta_local_error, label="runge_kutta local error")
-        ax.legend()'''
+        ax.legend()
 
         # third plot with global errors
         '''ax = self.figure.add_subplot(313)
