@@ -21,8 +21,8 @@ class App(QMainWindow):
         self.setWindowTitle(self.title)
         self.setGeometry(self.left, self.top, self.width, self.height)
 
-        #m = PlotCanvas(self, width=5, height=6)
-        #m.move(0, 0)
+        m = PlotCanvas(self, width=5, height=6)
+        m.move(0, 0)
 
         self.textbox = QLineEdit(self)
         self.textbox.move(520, 0)
@@ -65,6 +65,18 @@ class App(QMainWindow):
             #m = PlotCanvas(self, width=5, height=6, x_max=x_max, y0=y0, x0=x0)
             #m.move(0, 0)
             #m.show()
+
+class PlotCanvas(FigureCanvas):
+
+    def __init__(self, parent=None, width=5, height=4, dpi=100, x_max=10, y0=1, x0=0):
+        fig = Figure(figsize=(width, height), dpi=dpi)
+
+        FigureCanvas.__init__(self, fig)
+        self.setParent(parent)
+
+        FigureCanvas.setSizePolicy(self, QSizePolicy.Expanding, QSizePolicy.Expanding)
+        FigureCanvas.updateGeometry(self)
+        self.plot(x_max=x_max, x0=x0, y0=y0)
 
 
 if __name__ == '__main__':
