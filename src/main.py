@@ -5,6 +5,7 @@ from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 from matplotlib.figure import Figure
 from func import *
 from math import fabs
+import numpy as np
 
 
 class App(QMainWindow):
@@ -169,39 +170,9 @@ class PlotCanvas(FigureCanvas):
         ax.plot(array, runge_kutta_global_error, label="runge kutta global error")
         ax.legend()
 
-        self.figure.subplots_adjust()
-
         self.draw()
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
     ex = App()
     sys.exit(app.exec_())
-
-'''        for i in range(start, finish):
-            array.append(i)
-
-            # calculating every graph with 'i' accuracy
-            x_euler, y_euler = euler(i, x_max=10, x0=0, y0=1)
-            x_ivp, y_ivp = IVP(i, x_max=10, x0=0, y0=1)
-            x_euler_improved, y_euler_improved = euler_improved(i, x_max=10, x0=0, y0=1)
-            x_runge_kutta, y_runge_kutta = runge_kutta(i, x_max=10, x0=0, y0=1)
-
-            # calculating global error
-            euler_max_error = 0
-            euler_improved_max_error = 0
-            runge_kutta_max_error = 0
-
-            for j in range(i):
-                if fabs(y_ivp[j] - y_ivp[j]) > euler_max_error:
-                    euler_max_error = fabs(y_ivp[j] - y_ivp[j])
-
-                if fabs(y_ivp[j] - y_euler_improved[j]) > euler_improved_max_error:
-                    euler_improved_max_error = fabs(y_ivp[j] - y_euler_improved[j])
-
-                if fabs(y_ivp[j] - y_runge_kutta[j]) > runge_kutta_max_error:
-                    runge_kutta_max_error = fabs(y_ivp[j] - y_runge_kutta[j])
-
-            euler_global_error.append(euler_max_error)
-            euler_improved_global_error.append(euler_improved_max_error)
-            runge_kutta_global_error.append(runge_kutta_max_error)'''
