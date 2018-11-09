@@ -56,7 +56,7 @@ def IVP(steps, x_max = 10, x0 = 0, y0 = 1):
 
     # Initial values
     x = [x0]
-    y = [y0]
+    y = []
 
     # step size
     h = (x_max - x[0]) / steps

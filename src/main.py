@@ -105,6 +105,21 @@ class PlotCanvas(FigureCanvas):
             euler_improved_local_error.append(fabs(y_ivp[i] - y_euler_improved[i]))
             runge_kutta_local_error.append(fabs(y_ivp[i] - y_runge_kutta[i]))
 
+        # first plot with graphs
+        ax = self.figure.add_subplot(311)
+        ax.plot(x_euler, y_euler, label="euler")
+        ax.plot(x_ivp, y_ivp, label="IVP")
+        ax.plot(x_euler_improved, y_euler_improved, label="improved euler")
+        ax.plot(x_runge_kutta, y_runge_kutta, label="runge kutta")
+        ax.legend()
+
+        # second plot with local errors
+        ax = self.figure.add_subplot(312)
+        ax.plot(x_euler, euler_local_error, label="euler local error")
+        ax.plot(x_euler_improved, euler_improved_local_error, label="improved euler local error")
+        ax.plot(x_runge_kutta, runge_kutta_local_error, label="runge_kutta local error")
+        ax.legend()
+
         # global error calculating
 
         # start and finish
@@ -119,27 +134,42 @@ class PlotCanvas(FigureCanvas):
         euler_improved_global_error = []
         runge_kutta_global_error = []
 
-        # first plot with graphs
-        ax = self.figure.add_subplot(311)
-        ax.plot(x_euler, y_euler, label="euler")
-        #ax.plot(x_ivp, y_ivp, label="IVP")
-        ax.plot(x_euler_improved, y_euler_improved, label="improved euler")
-        ax.plot(x_runge_kutta, y_runge_kutta, label="runge kutta")
-        ax.legend()
+        for i in range(start, finish):
+            array.append(i)
 
-        # second plot with local errors
-        ax = self.figure.add_subplot(312)
-        ax.plot(x_euler, euler_local_error, label="euler local error")
-        ax.plot(x_euler_improved, euler_improved_local_error, label="improved euler local error")
-        ax.plot(x_runge_kutta, runge_kutta_local_error, label="runge_kutta local error")
-        ax.legend()
+            # calculating every graph with 'i' accuracy
+            x_euler, y_euler = euler(i, x_max=10, x0=0, y0=1)
+            x_ivp, y_ivp = IVP(i, x_max=10, x0=0, y0=1)
+            x_euler_improved, y_euler_improved = euler_improved(i, x_max=10, x0=0, y0=1)
+            x_runge_kutta, y_runge_kutta = runge_kutta(i, x_max=10, x0=0, y0=1)
+
+            # calculating global error
+            euler_max_error = 0
+            euler_improved_max_error = 0
+            runge_kutta_max_error = 0
+
+            for j in range(i):
+                if fabs(y_ivp[j] - y_ivp[j]) > euler_max_error:
+                    euler_max_error = fabs(y_ivp[j] - y_ivp[j])
+
+                if fabs(y_ivp[j] - y_euler_improved[j]) > euler_improved_max_error:
+                    euler_improved_max_error = fabs(y_ivp[j] - y_euler_improved[j])
+
+                if fabs(y_ivp[j] - y_runge_kutta[j]) > runge_kutta_max_error:
+                    runge_kutta_max_error = fabs(y_ivp[j] - y_runge_kutta[j])
+
+            euler_global_error.append(euler_max_error)
+            euler_improved_global_error.append(euler_improved_max_error)
+            runge_kutta_global_error.append(runge_kutta_max_error)
 
         # third plot with global errors
-        '''ax = self.figure.add_subplot(313)
+        ax = self.figure.add_subplot(313)
         ax.plot(array, euler_global_error, label="euler global error")
         ax.plot(array, euler_improved_global_error, label="improved euler global error")
         ax.plot(array, runge_kutta_global_error, label="runge kutta global error")
-        ax.legend()'''
+        ax.legend()
+
+        self.figure.subplots_adjust()
 
         self.draw()
 
