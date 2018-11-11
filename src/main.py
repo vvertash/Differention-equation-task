@@ -5,7 +5,6 @@ from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 from matplotlib.figure import Figure
 from func import *
 from math import fabs
-import numpy as np
 
 
 class App(QMainWindow):
@@ -56,8 +55,18 @@ class App(QMainWindow):
         self.label_x.setText("x")
         self.label_x.move(660, 190)
 
+        # forth textbox with N(steps)
+        self.textbox_x = QLineEdit(self)
+        self.textbox_x.move(520, 260)
+        self.textbox_x.resize(120, 50)
+
+        # forth label with N(steps)
+        self.label_x = QLabel(self)
+        self.label_x.setText("N")
+        self.label_x.move(660, 280)
+
         button = QPushButton('Apply', self)
-        button.move(520, 250)
+        button.move(520, 340)
         button.resize(120, 50)
 
         # connect button to function on_click
@@ -70,13 +79,14 @@ class App(QMainWindow):
         x0 = float(self.textbox_x0.text())
         y0 = float(self.textbox_y0.text())
         x_max = int(self.textbox_x.text())
+        steps = int(self.textbox_x.text())
         m = PlotCanvas(self, width=5, height=6, x_max=x_max, y0=y0, x0=x0)
         m.move(0, 0)
         m.show()
 
 class PlotCanvas(FigureCanvas):
 
-    def __init__(self, parent=None, width=5, height=4, dpi=100, x_max=10, y0=1, x0=0):
+    def __init__(self, parent=None, width=5, height=4, dpi=100, x_max=10, y0=1, x0=0, steps=30):
         fig = Figure(figsize=(width, height), dpi=dpi)
 
         FigureCanvas.__init__(self, fig)
@@ -84,12 +94,9 @@ class PlotCanvas(FigureCanvas):
 
         FigureCanvas.setSizePolicy(self, QSizePolicy.Expanding, QSizePolicy.Expanding)
         FigureCanvas.updateGeometry(self)
-        self.plot(x_max=x_max, x0=x0, y0=y0)
+        self.plot(x_max=x_max, x0=x0, y0=y0, steps=steps)
 
-    def plot(self, x_max=10, x0=0, y0=1):
-
-        # steps
-        steps = 3
+    def plot(self, x_max=10, x0=0, y0=1, steps=30):
 
         # calculating graphs
         x_euler, y_euler = euler(steps, x_max=x_max, x0=x0, y0=y0)

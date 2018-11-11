@@ -6,9 +6,9 @@ def func(x, y):
 
 # function of my solution of IVP
 def funcIVP(x, x0 = 0, y0 = 1):
-    c = math.e ** x * (y0 + x0 - 1)
-    return c * math.e ** (-x) - x + 1
-    #return 1 - x
+    #c = math.e ** x * (y0 + x0 - 1)
+    #return c * math.e ** (-x) - x + 1
+    return 1 - x
 
 # function counting delta for improved euler method
 def delta_y(x, y, h):
